@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Buss {
     private int[][] kohad;
-    private List<Integer> kohtadeNr;
     private double piletiHind;
     private List<Piletiostja> reisijad = new ArrayList<>();
     private String liin;
@@ -19,15 +18,8 @@ public class Buss {
             kohad[i][0] = 2 * i + 1;
             kohad[i][1] = 2 * i + 2;
         }
-        this.kohtadeNr = new ArrayList<>();
-        for (int i = 0; i < ridade_arv * 4; i++) kohtadeNr.add(i+1);
 
         this.liin = liin;
-    }
-
-
-    public List<Integer> getKohtadeNr() {
-        return kohtadeNr;
     }
 
     public int[][] getKohad() { return kohad; }
