@@ -12,13 +12,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Peaklass_graafiline extends Application {
+
     public void start(Stage peaLava) throws Exception {
 
         //// Kood ////
@@ -74,6 +74,7 @@ public class Peaklass_graafiline extends Application {
 
 
         //// Ostja //// 3
+
 
         BorderPane bp3 = new BorderPane();
         HBox hb3 = new HBox();
@@ -143,9 +144,12 @@ public class Peaklass_graafiline extends Application {
         piir2.setCenter(vb33);
         Button nuppKinnita = new Button("Kinnita");
 
+        List<CheckBox> kohaKogu = new ArrayList<>();
+        ListView<CheckBox> list = new ListView<>();
         nupud3.selectedToggleProperty().addListener(
                 (ObservableValue<? extends Toggle> ov, Toggle old_toggle,
                  Toggle new_toggle) -> {
+                    kohaKogu.clear();
                     if (nupud3.getSelectedToggle() != null) {
                         Buss buss = bussid.get(0);
                         for (Buss b : bussid) {
@@ -156,23 +160,34 @@ public class Peaklass_graafiline extends Application {
                         }
                         vb33.getChildren().clear();
                         vb33.getChildren().add(silt38);
-                        List<CheckBox> kohaKogu = new ArrayList<>();
 
                         for (int i = 0; i < buss.getKohad().length * 2; i++) {
                             CheckBox kohaNumber = new CheckBox(String.valueOf(i+1));
                             kohaKogu.add(kohaNumber);
                         }
 
-                        ListView<CheckBox> list = new ListView<>();
                         ObservableList<CheckBox> items = FXCollections.observableArrayList(kohaKogu);
                         list.setItems(items);
                         list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+                        /*list.getSelectionModel().selectedItemProperty()
+                                .addListener((ObservableValue<? extends String> ov, String old_val, String new_val) -> {
+                                    ObservableList<CheckBox> selectedItems = list.getSelectionModel().getSelectedItems();
+                                    StringBuilder sb = new StringBuilder("Valitud :");
+                                    for (CheckBox name : selectedItems) {
+                                        sb.append(name + "\n");
+                                    }
+                                    System.out.println(sb);
+                                });*/
 
                         vb33.getChildren().add(list);
 
                         piir2.setBottom(nuppKinnita);
                     }
                 });
+
+
+
 
 
         juur3.getChildren().add(bp3);
@@ -343,7 +358,39 @@ public class Peaklass_graafiline extends Application {
 
         Label silt441 = new Label();
         Button nupp441 = new Button("Kinnita ost");
-        nupp441.setOnMouseClicked(event -> {
+
+        // suht ebaeffektiivne preagu
+        nupud3.selectedToggleProperty().addListener(
+                (ObservableValue<? extends Toggle> ov, Toggle old_toggle,
+                 Toggle new_toggle) -> {
+                    if (nupud3.getSelectedToggle() != null) {
+                        Buss buss = bussid.get(0);
+                        for (Buss b : bussid) {
+                            if (b.getLiin().equals(nupud3.getSelectedToggle().getUserData().toString())) {
+                                buss = b;
+                                break;
+                            }
+                        }
+
+                        Buss finalBuss = buss;
+                        nupp441.setOnMouseClicked(event -> {
+                            if (!tf41.getText().isEmpty() && !tf42.getText().isEmpty() && !tf43.getText().isEmpty()){
+                                silt441.setText("");
+                                Piletiostja piletiostja = new Piletiostja(tf41.getText() + " " + tf42.getText() ,tf43.getText());
+                                finalBuss.lisaReisija(piletiostja);
+
+                                tf41.clear();
+                                tf42.clear();
+                                tf43.clear();
+                                peaLava.setScene(ostuLõpp);
+                            } else {
+                                silt441.setText("Vigane sisend!");
+                            }
+                        });
+                    }
+                });
+
+        /*nupp441.setOnMouseClicked(event -> {
             if (!tf41.getText().isEmpty() && !tf42.getText().isEmpty() && !tf43.getText().isEmpty()){
                 silt441.setText("");
                 Piletiostja piletiostja = new Piletiostja(tf41.getText() + " " + tf42.getText() ,tf43.getText());
@@ -356,7 +403,7 @@ public class Peaklass_graafiline extends Application {
             } else {
                 silt441.setText("Vigane sisend!");
             }
-        });
+        });*/
 
         vb4.getChildren().addAll(silt4, hb42, nupp441, silt441);
         bp4.setCenter(vb4);
