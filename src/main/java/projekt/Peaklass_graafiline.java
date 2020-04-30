@@ -44,7 +44,10 @@ public class Peaklass_graafiline extends Application {
         Scene ostja = new Scene(juur3, 1000, 500, Color.SNOW);
 
         Group juur4 = new Group();
-        Scene ost = new Scene(juur4, 270, 275, Color.SNOW);
+        Scene ost = new Scene(juur4, 280, 275, Color.SNOW);
+
+        Group juur5 = new Group();
+        Scene ostuLõpp = new Scene(juur5, 320, 170, Color.SNOW);
 
 
         //// Sisenemine //// 1
@@ -124,8 +127,8 @@ public class Peaklass_graafiline extends Application {
 
         bp3.setCenter(vb32);
 
-        //// Ostja valik ////
 
+        //// Ostja valik ////
 
         BorderPane piir2 = new BorderPane();
         piir2.setPadding(new Insets(10));
@@ -173,8 +176,8 @@ public class Peaklass_graafiline extends Application {
 
 
         juur3.getChildren().add(bp3);
-        peaLava.widthProperty().addListener((obs, oldVal, newVal) -> vb32.setMinWidth((double)newVal - 500));
 
+        peaLava.widthProperty().addListener((obs, oldVal, newVal) -> vb32.setMinWidth((double)newVal - 500));
         nuppKinnita.setOnMouseClicked(event -> peaLava.setScene(ost));
 
 
@@ -349,6 +352,7 @@ public class Peaklass_graafiline extends Application {
                 tf41.clear();
                 tf42.clear();
                 tf43.clear();
+                peaLava.setScene(ostuLõpp);
             } else {
                 silt441.setText("Vigane sisend!");
             }
@@ -360,7 +364,30 @@ public class Peaklass_graafiline extends Application {
 
 
         juur4.getChildren().add(bp4);
-        peaLava.widthProperty().addListener((obs, oldVal, newVal) -> vb22.setMinWidth((double)newVal - 500));
+
+        //// OstuLõpp ////
+
+        BorderPane bp5 = new BorderPane();
+
+        VBox vb5 = new VBox();
+        vb5.setPadding(new Insets(10));
+        vb5.setSpacing(20);
+        Label silt51 = new Label("Teie kohad on broneeritud ja arve e-mailile saadetud.");
+        Label silt52 = new Label("Kohad: " );
+        Label silt53 = new Label("Arve: " );
+        vb5.getChildren().addAll(silt51, silt52, silt53);
+        bp5.setTop(vb5);
+
+        HBox hb5 = new HBox();
+        hb5.setPadding(new Insets(10));
+        Button nupp51 = new Button("Tagasi");
+        nupp51.setOnMouseClicked(event -> peaLava.setScene(login));
+        hb5.getChildren().add(nupp51);
+        bp5.setBottom(hb5);
+
+        juur5.getChildren().add(bp5);
+
+
 
 
         //// Aken ////
