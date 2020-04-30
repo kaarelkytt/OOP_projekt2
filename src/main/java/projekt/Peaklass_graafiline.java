@@ -126,6 +126,7 @@ public class Peaklass_graafiline extends Application {
 
         //// Ostja valik ////
 
+
         BorderPane piir2 = new BorderPane();
         piir2.setPadding(new Insets(10));
         bp3.setRight(piir2);
@@ -154,8 +155,8 @@ public class Peaklass_graafiline extends Application {
                         vb33.getChildren().add(silt38);
                         List<CheckBox> kohaKogu = new ArrayList<>();
 
-                        for (Integer integer : buss.getKohtadeNr()) {
-                            CheckBox kohaNumber = new CheckBox(integer.toString());
+                        for (int i = 0; i < buss.getKohad().length * 2; i++) {
+                            CheckBox kohaNumber = new CheckBox(String.valueOf(i+1));
                             kohaKogu.add(kohaNumber);
                         }
 
