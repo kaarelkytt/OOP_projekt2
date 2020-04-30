@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Buss {
     private int[][] kohad;
+    private List<Integer> kohtadeNr;
     private double piletiHind;
     private List<Piletiostja> reisijad = new ArrayList<>();
     private String liin;
@@ -18,8 +19,18 @@ public class Buss {
             kohad[i][0] = 2 * i + 1;
             kohad[i][1] = 2 * i + 2;
         }
+        this.kohtadeNr = new ArrayList<>();
+        for (int i = 0; i < ridade_arv * 4; i++) kohtadeNr.add(i+1);
+
         this.liin = liin;
     }
+
+
+    public List<Integer> getKohtadeNr() {
+        return kohtadeNr;
+    }
+
+    public int[][] getKohad() { return kohad; }
 
     public double getPiletiHind() {
         return piletiHind;
@@ -50,7 +61,7 @@ public class Buss {
     }
 
     public void bussiplaan() {
-        // V‰ljastab bussi kohtade plaani, kus nulliga on m‰rgistatud ostetud kohad
+        // V√§ljastab bussi kohtade plaani, kus nulliga on m√§rgistatud ostetud kohad
         // Paarituarvulised kohad on alati akna all
         System.out.println("Bussi kohtade plaan:");
         for (int i = 0; i < kohad.length / 2; i++) {
@@ -71,7 +82,7 @@ public class Buss {
 
     public boolean piisavalt_kohti(int kohtade_arv) {
         // Antud soovitud kohtade arv
-        // Tagastab tıev‰‰rtuse, kas bussis on nii palju vabu kohti
+        // Tagastab t√µev√§√§rtuse, kas bussis on nii palju vabu kohti
         return vabad_kohad() >= kohtade_arv;
     }
 
