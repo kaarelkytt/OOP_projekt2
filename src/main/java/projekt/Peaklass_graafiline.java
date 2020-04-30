@@ -2,6 +2,8 @@ package projekt;
 
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -10,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -22,13 +25,14 @@ public class Peaklass_graafiline extends Application {
 
         ArrayList<Buss> bussid = new ArrayList<>();
         Buss b1 = new Buss(10, 7, "Tallinn - Tartu");
+        //b1.bussiplaan();
         Buss b2 = new Buss(9, 7, "Tartu - Tallinn");
-        Buss b3 = new Buss(14, 5, "Tallinn - Pärnu");
+        Buss b3 = new Buss(14, 5, "Tallinn - PÃ¤rnu");
         bussid.add(b1);
         bussid.add(b2);
         bussid.add(b3);
 
-        //// Kõikide lehtede stseenid ////
+        //// KÃµikide lehtede stseenid ////
 
         Group juur1 = new Group();
         Scene login = new Scene(juur1, 260, 100, Color.SNOW);
@@ -40,12 +44,12 @@ public class Peaklass_graafiline extends Application {
         Scene ostja = new Scene(juur3, 1000, 500, Color.SNOW);
 
         Group juur4 = new Group();
-        Scene ost = new Scene(juur4, 260, 100, Color.SNOW);
+        Scene ost = new Scene(juur4, 270, 275, Color.SNOW);
 
 
         //// Sisenemine //// 1
 
-        Label silt11 = new Label("Sisenen süsteemi kui:");
+        Label silt11 = new Label("Sisenen sÃ¼steemi kui:");
         silt11.setLayoutX(70);
         silt11.setLayoutY(20);
         juur1.getChildren().add(silt11);
@@ -120,18 +124,57 @@ public class Peaklass_graafiline extends Application {
 
         bp3.setCenter(vb32);
 
+        //// Ostja valik ////
+
+        BorderPane piir2 = new BorderPane();
+        piir2.setPadding(new Insets(10));
+        bp3.setRight(piir2);
+
         VBox vb33 = new VBox();
+        vb33.setMaxHeight(350);
         vb33.setPadding(new Insets(10));
         vb33.setSpacing(20);
         Label silt38 = new Label("Kohad");
-
-
         vb33.getChildren().add(silt38);
-        bp3.setRight(vb33);
+        piir2.setCenter(vb33);
+        Button nuppKinnita = new Button("Kinnita");
+
+        nupud3.selectedToggleProperty().addListener(
+                (ObservableValue<? extends Toggle> ov, Toggle old_toggle,
+                 Toggle new_toggle) -> {
+                    if (nupud3.getSelectedToggle() != null) {
+                        Buss buss = bussid.get(0);
+                        for (Buss b : bussid) {
+                            if (b.getLiin().equals(nupud3.getSelectedToggle().getUserData().toString())) {
+                                buss = b;
+                                break;
+                            }
+                        }
+                        vb33.getChildren().clear();
+                        vb33.getChildren().add(silt38);
+                        List<CheckBox> kohaKogu = new ArrayList<>();
+
+                        for (Integer integer : buss.getKohtadeNr()) {
+                            CheckBox kohaNumber = new CheckBox(integer.toString());
+                            kohaKogu.add(kohaNumber);
+                        }
+
+                        ListView<CheckBox> list = new ListView<>();
+                        ObservableList<CheckBox> items = FXCollections.observableArrayList(kohaKogu);
+                        list.setItems(items);
+                        list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+                        vb33.getChildren().add(list);
+
+                        piir2.setBottom(nuppKinnita);
+                    }
+                });
+
 
         juur3.getChildren().add(bp3);
         peaLava.widthProperty().addListener((obs, oldVal, newVal) -> vb32.setMinWidth((double)newVal - 500));
 
+        nuppKinnita.setOnMouseClicked(event -> peaLava.setScene(ost));
 
 
         //// Administraator //// 2
@@ -215,9 +258,9 @@ public class Peaklass_graafiline extends Application {
                     TextField tf21 = new TextField();
                     tf21.setPromptText("5-15");
                     TextField tf22 = new TextField();
-                    tf22.setPromptText("hind €");
+                    tf22.setPromptText("hind â‚¬");
                     TextField tf23 = new TextField();
-                    tf23.setPromptText("sihtkoht - lähtekoht");
+                    tf23.setPromptText("sihtkoht - lÃ¤htekoht");
                     vb25.getChildren().addAll(tf21, tf22, tf23);
                 hb21.getChildren().addAll(vb24, vb25);
 
@@ -253,6 +296,70 @@ public class Peaklass_graafiline extends Application {
         juur2.getChildren().add(bp2);
         peaLava.widthProperty().addListener((obs, oldVal, newVal) -> vb22.setMinWidth((double)newVal - 500));
 
+
+        //// Ost ////
+
+        BorderPane bp4 = new BorderPane();
+        HBox hb4 = new HBox();
+        hb4.setPadding(new Insets(10));
+
+        Button nupp41 = new Button("Tagasi");
+        nupp41.setOnMouseClicked(event -> peaLava.setScene(ostja));
+        hb4.getChildren().add(nupp41);
+        bp4.setTop(hb4);
+
+
+        VBox vb4 = new VBox();
+        vb4.setPadding(new Insets(10));
+        vb4.setSpacing(20);
+        Label silt4 = new Label("Sisestage enda andmed:");
+
+
+        HBox hb42 = new HBox();
+        hb42.setSpacing(5);
+
+        VBox vb41 = new VBox();
+        vb41.setSpacing(18);
+        vb41.setPadding(new Insets(5));
+        Label silt41 = new Label("Eesnimi");
+        Label silt42 = new Label("Perekonna nimi");
+        Label silt43 = new Label("E-mail");
+        vb41.getChildren().addAll(silt41, silt42, silt43);
+
+        VBox vb42 = new VBox();
+        vb42.setSpacing(10);
+        TextField tf41 = new TextField();
+        tf41.setPromptText("eesnimi");
+        TextField tf42 = new TextField();
+        tf42.setPromptText("perekonnanimi");
+        TextField tf43 = new TextField();
+        tf43.setPromptText("e-mail");
+        vb42.getChildren().addAll(tf41, tf42, tf43);
+        hb42.getChildren().addAll(vb41, vb42);
+
+        Label silt441 = new Label();
+        Button nupp441 = new Button("Kinnita ost");
+        nupp441.setOnMouseClicked(event -> {
+            if (!tf41.getText().isEmpty() && !tf42.getText().isEmpty() && !tf43.getText().isEmpty()){
+                silt441.setText("");
+                Piletiostja piletiostja = new Piletiostja(tf41.getText() + " " + tf42.getText() ,tf43.getText());
+
+
+                tf41.clear();
+                tf42.clear();
+                tf43.clear();
+            } else {
+                silt441.setText("Vigane sisend!");
+            }
+        });
+
+        vb4.getChildren().addAll(silt4, hb42, nupp441, silt441);
+        bp4.setCenter(vb4);
+
+
+
+        juur4.getChildren().add(bp4);
+        peaLava.widthProperty().addListener((obs, oldVal, newVal) -> vb22.setMinWidth((double)newVal - 500));
 
 
         //// Aken ////
