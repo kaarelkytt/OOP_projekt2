@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/build.gradle" charset="windows-1257" />
-    <file url="file://$PROJECT_DIR$/src/main/java/projekt/Buss.java" charset="windows-1257" />
+    <file url="file://$PROJECT_DIR$/build.gradle" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/projekt/Buss.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/projekt/Müügisüsteem.java" charset="windows-1257" />
     <file url="file://$PROJECT_DIR$/src/main/java/projekt/Peaklass.java" charset="windows-1257" />
-    <file url="file://$PROJECT_DIR$/src/main/java/projekt/Peaklass_graafiline.java" charset="windows-1257" />
+    <file url="file://$PROJECT_DIR$/src/main/java/projekt/Peaklass.java" charset="windows-1257" />
     <file url="file://$PROJECT_DIR$/src/main/java/projekt/Piletiostja.java" charset="windows-1257" />
+    <file url="file://$PROJECT_DIR$/src/main/java/projekt/bussid.txt" charset="UTF-8" />
   </component>
 </project>

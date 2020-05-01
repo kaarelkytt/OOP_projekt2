@@ -2,8 +2,6 @@ package projekt;
 
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -18,11 +16,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Peaklass_graafiline extends Application {
+public class Peaklass extends Application {
 
     public void start(Stage peaLava) throws Exception {
-
-        //// Kood ////
 
         ArrayList<Buss> bussid = Andmed.failist("src/main/java/projekt/bussid.txt");
 
@@ -46,7 +42,7 @@ public class Peaklass_graafiline extends Application {
 
         Group juur5 = new Group();
         ScrollPane scroller5 = new ScrollPane(juur5);
-        Scene ostuLõpp = new Scene(scroller5, 330, 185, Color.SNOW);
+        Scene ostuLõpp = new Scene(scroller5, 330, 220, Color.SNOW);
 
 
         //// Sisenemine //// 1
@@ -107,18 +103,24 @@ public class Peaklass_graafiline extends Application {
 
         // parem serv
         BorderPane piir2 = new BorderPane();
+        piir2.setMaxHeight(400);
+        piir2.setMinWidth(220);
         piir2.setPadding(new Insets(10));
+        Label silt38 = new Label("Kohad");
+        piir2.setTop(silt38);
         bp3.setRight(piir2);
 
         VBox vb33 = new VBox();
-        vb33.setMaxHeight(350);
         vb33.setPadding(new Insets(10));
-        vb33.setSpacing(20);
-        piir2.setCenter(vb33);
+        vb33.setSpacing(10);
+        ScrollPane scroller31 = new ScrollPane(vb33);
+        scroller31.setStyle("-fx-background: transparent;\n -fx-background-color: transparent");
+        piir2.setCenter(scroller31);
         Label valitudKohad = new Label();
         Button nuppKinnita = new Button("Kinnita");
 
         nupud3.selectedToggleProperty().addListener(
+                // Lehe sisu muutub vastavalt valitud bussile
                 (ObservableValue<? extends Toggle> ov, Toggle old_toggle,
                  Toggle new_toggle) -> {
                     if (nupud3.getSelectedToggle() != null) {
@@ -130,6 +132,7 @@ public class Peaklass_graafiline extends Application {
                             }
                         }
                         vb32.getChildren().clear();
+                        // Kuvatakse bussi põhiinfo
                         Label silt33 = new Label("Buss: " + buss.getLiin());
                         Label silt34 = new Label("Pileti hind: " + buss.getPiletiHind());
                         Label silt35 = new Label("Vabu kohti: " + buss.vabad_kohad());
@@ -137,15 +140,14 @@ public class Peaklass_graafiline extends Application {
 
                         vb33.getChildren().clear();
                         valitudKohad.setText("");
-                        Label silt38 = new Label("Kohad");
-                        vb33.getChildren().add(silt38);
 
                         ArrayList<Integer> kohad = new ArrayList<>();
 
-
+                        // Luuakse nuppude tabel bussiplaani järgi
                         for (int i = 0; i < buss.getRidade_arv(); i++) {
                             HBox hb = new HBox();
                             for (int j = 0; j < 2; j++) {
+
                                 // vasakpoolsed kohad
                                 int koht = buss.getKohad()[i * 2][j];
                                 Button nupp = new Button(Integer.toString(koht));
@@ -164,7 +166,11 @@ public class Peaklass_graafiline extends Application {
 
                             }
 
+                            Label l = new Label("          ");
+                            hb.getChildren().add(l);
+
                             for (int j = 0; j < 2; j++) {
+
                                 // parempoolsed kohad
                                 int koht2 = buss.getKohad()[i * 2 + 1][j];
                                 Button nupp2 = new Button(Integer.toString(koht2));
@@ -187,6 +193,11 @@ public class Peaklass_graafiline extends Application {
                         }
                         vb32.getChildren().add(valitudKohad);
                         piir2.setBottom(nuppKinnita);
+
+                        nuppKinnita.setOnMouseClicked(event -> {
+                            peaLava.setScene(ost);
+                            kohad.clear();
+                        });
                     }
                 });
 
@@ -195,7 +206,7 @@ public class Peaklass_graafiline extends Application {
         juur3.getChildren().add(bp3);
 
         peaLava.widthProperty().addListener((obs, oldVal, newVal) -> vb32.setMinWidth((double) newVal - 500));
-        nuppKinnita.setOnMouseClicked(event -> peaLava.setScene(ost));
+
 
 
         //// Ost ////
@@ -243,9 +254,10 @@ public class Peaklass_graafiline extends Application {
         Label arve = new Label();
         Label ostetudKohad = new Label();
         Label email = new Label();
+        Label võit = new Label();
 
-        // suht ebaeffektiivne preagu
         nupud3.selectedToggleProperty().addListener(
+                // Bussi andmed saadakse eelmiselt lehelt
                 (ObservableValue<? extends Toggle> ov, Toggle old_toggle,
                  Toggle new_toggle) -> {
                     if (nupud3.getSelectedToggle() != null) {
@@ -262,19 +274,23 @@ public class Peaklass_graafiline extends Application {
                             if (!tf41.getText().isEmpty() && !tf42.getText().isEmpty() && !tf43.getText().isEmpty()) {
                                 silt441.setText("");
 
+                                // Valitud kohad võetakse eelmiselt lehelt
                                 String sKohad = valitudKohad.getText().replace(":",",")
                                         .replace("[", "").replace("]", "");
                                 String[] ssKohad = sKohad.split(",");
+                                valitudKohad.setText("");
 
                                 ArrayList<Integer> kohad = new ArrayList<>();
                                 for (int i = 1; i < ssKohad.length; i++) {
                                     kohad.add(Integer.parseInt(ssKohad[i].trim()));
                                 }
 
+                                // Luuakse piletiostja ja kinnitatakse kohad
                                 Piletiostja piletiostja = new Piletiostja(tf41.getText() + " " + tf42.getText(), tf43.getText());
                                 piletiostja.osta(kohad, finalBuss);
                                 finalBuss.ost(kohad, piletiostja);
 
+                                // Andmed salvestatakse
                                 try {
                                     Andmed.salvesta("src/main/java/projekt/bussid.txt", bussid);
                                 } catch (IOException e) {
@@ -285,11 +301,13 @@ public class Peaklass_graafiline extends Application {
                                 ostetudKohad.setText(sKohad.replace("Valitud kohad,", "Kohad:"));
                                 arve.setText("Arve: " + piletiostja.getSumma());
                                 email.setText("Teie kohad on broneeritud ja arve saadetud e-mailile: \n"  + piletiostja.getEmail());
+                                if (piletiostja.isVõit()){
+                                    võit.setText("Palju õnne! Võitsite ühe tasuta koha!");
+                                }
 
                                 tf41.clear();
                                 tf42.clear();
                                 tf43.clear();
-
 
                                 peaLava.setScene(ostuLõpp);
                             } else {
@@ -302,7 +320,6 @@ public class Peaklass_graafiline extends Application {
         vb4.getChildren().addAll(silt4, hb42, nupp441, silt441);
         bp4.setCenter(vb4);
 
-
         juur4.getChildren().add(bp4);
 
 
@@ -313,26 +330,18 @@ public class Peaklass_graafiline extends Application {
         VBox vb5 = new VBox();
         vb5.setPadding(new Insets(10));
         vb5.setSpacing(20);
-        //Label silt51 = new Label("Teie kohad on broneeritud ja arve e-mailile saadetud.");
-        //Label silt52 = new Label("Kohad: ");
-        //Label silt53 = new Label("Arve: ");
-        vb5.getChildren().addAll(email, ostetudKohad, arve);
+        vb5.getChildren().addAll(email, ostetudKohad, arve, võit);
         bp5.setTop(vb5);
 
         HBox hb5 = new HBox();
         hb5.setPadding(new Insets(10));
         Button nupp51 = new Button("Tagasi");
-        nupp51.setOnMouseClicked(event -> {
-            nupud3.getToggles().clear();
-            vb32.getChildren().clear();
-            vb33.getChildren().clear();
-            piir2.getChildren().remove(nuppKinnita);
-            peaLava.setScene(login);
-        });
+        nupp51.setOnMouseClicked(event -> peaLava.setScene(login));
         hb5.getChildren().add(nupp51);
         bp5.setBottom(hb5);
 
         juur5.getChildren().add(bp5);
+
 
 
         //// Administraator //// 2
@@ -369,6 +378,7 @@ public class Peaklass_graafiline extends Application {
         vb22.getChildren().add(silt22);
 
         nupud2.selectedToggleProperty().addListener(
+                // Lehe andmed muutuvad vastavalt valitud bussile
                 (ObservableValue<? extends Toggle> ov, Toggle old_toggle,
                  Toggle new_toggle) -> {
                     if (nupud2.getSelectedToggle() != null) {
@@ -429,6 +439,8 @@ public class Peaklass_graafiline extends Application {
                 silt212.setText("");
                 Buss buss = new Buss(Integer.parseInt(tf21.getText()), Double.parseDouble(tf22.getText()), tf23.getText());
                 bussid.add(buss);
+
+                // bussi lisamisel salvestatakse see kohe ka faili
                 try {
                     Andmed.salvesta("src/main/java/projekt/bussid.txt", bussid);
                 } catch (IOException e) {
@@ -459,6 +471,7 @@ public class Peaklass_graafiline extends Application {
 
         juur2.getChildren().add(bp2);
         peaLava.widthProperty().addListener((obs, oldVal, newVal) -> vb22.setMinWidth((double) newVal - 500));
+
 
 
         //// Aken ////

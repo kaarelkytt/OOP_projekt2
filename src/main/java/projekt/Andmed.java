@@ -1,6 +1,7 @@
 package projekt;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class Andmed {
     public static void salvesta(String tee, ArrayList<Buss> bussid) throws IOException {
         File fail = new File(tee);
 
-        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fail)))) {
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fail), StandardCharsets.UTF_8))) {
             for (Buss buss : bussid) {
                 bw.write("buss," + buss.getRidade_arv() + "," + buss.getPiletiHind() + "," + buss.getLiin() + "\n");
                 List<Piletiostja> reisijad = buss.getReisijad();
