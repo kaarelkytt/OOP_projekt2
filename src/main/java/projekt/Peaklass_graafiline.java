@@ -268,6 +268,9 @@ public class Peaklass_graafiline extends Application {
 
         Label silt441 = new Label();
         Button nupp441 = new Button("Kinnita ost");
+        Label arve = new Label();
+        Label ostetudKohad = new Label();
+        Label email = new Label();
 
         // suht ebaeffektiivne preagu
         nupud3.selectedToggleProperty().addListener(
@@ -296,7 +299,20 @@ public class Peaklass_graafiline extends Application {
                                     kohad.add(Integer.parseInt(ssKohad[i].trim()));
                                 }
 
-                                Müügisüsteem.müü(finalBuss, tf41.getText() + " " + tf42.getText(), tf43.getText(), kohad);
+                                Piletiostja piletiostja = new Piletiostja(tf41.getText() + " " + tf42.getText(), tf43.getText());
+                                piletiostja.osta(kohad, finalBuss);
+                                finalBuss.ost(kohad, piletiostja);
+
+                                try {
+                                    Andmed.salvesta("src/main/java/projekt/bussid.txt", bussid);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    silt441.setText("VIGA! Andmeid ei salvestatud!");
+                                }
+
+                                ostetudKohad.setText(sKohad.replace("Valitud k", "K"));
+                                arve.setText("Arve: " + piletiostja.getSumma());
+                                email.setText("Teie kohad on broneeritud ja arve saadetud e-mailile: " + piletiostja.getEmail());
 
                                 tf41.clear();
                                 tf42.clear();
@@ -338,10 +354,10 @@ public class Peaklass_graafiline extends Application {
         VBox vb5 = new VBox();
         vb5.setPadding(new Insets(10));
         vb5.setSpacing(20);
-        Label silt51 = new Label("Teie kohad on broneeritud ja arve e-mailile saadetud.");
-        Label silt52 = new Label("Kohad: ");
-        Label silt53 = new Label("Arve: ");
-        vb5.getChildren().addAll(silt51, silt52, silt53);
+        //Label silt51 = new Label("Teie kohad on broneeritud ja arve e-mailile saadetud.");
+        //Label silt52 = new Label("Kohad: ");
+        //Label silt53 = new Label("Arve: ");
+        vb5.getChildren().addAll(email, ostetudKohad, arve);
         bp5.setTop(vb5);
 
         HBox hb5 = new HBox();

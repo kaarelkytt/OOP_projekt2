@@ -54,9 +54,11 @@ public class Piletiostja {
                 ')';
     }
 
-    public void osta(int piletiteArv, Buss buss) {
+    public void osta(List<Integer> kohad, Buss buss) {
         // Fikseerib piletiostja piletite maksumuse
         // ja loosib, kas ta on võitnud tasuta pileti
+        this.kohad = kohad;
+        int piletiteArv = kohad.size();
         if (piletiteArv > 3 && Math.random() < 0.05 * (piletiteArv - 3)) {
             this.summa = (piletiteArv - 1) * buss.getPiletiHind();
             this.võit = true;

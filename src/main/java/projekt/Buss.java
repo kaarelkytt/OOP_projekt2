@@ -74,8 +74,8 @@ public class Buss {
         // Paneb bussis kinni vastavad kohad ja lisab reisija
         for (int koht : kohad){
             koht_kinni(koht);
-            lisaReisija(reisija);
         }
+        lisaReisija(reisija);
     }
 
     /*
