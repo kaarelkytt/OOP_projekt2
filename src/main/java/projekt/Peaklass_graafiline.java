@@ -26,7 +26,6 @@ public class Peaklass_graafiline extends Application {
 
         ArrayList<Buss> bussid = Andmed.failist("src/main/java/projekt/bussid.txt");
 
-        //Andmed.salvesta("src/main/java/projekt/bussid.txt", bussid);
 
         //// Kõikide lehtede stseenid ////
 
@@ -34,16 +33,20 @@ public class Peaklass_graafiline extends Application {
         Scene login = new Scene(juur1, 260, 100, Color.SNOW);
 
         Group juur2 = new Group();
-        Scene admin = new Scene(juur2, 1000, 500, Color.SNOW);
+        ScrollPane scroller2 = new ScrollPane(juur2);
+        Scene admin = new Scene(scroller2, 1000, 500, Color.SNOW);
 
         Group juur3 = new Group();
-        Scene ostja = new Scene(juur3, 1000, 500, Color.SNOW);
+        ScrollPane scroller3 = new ScrollPane(juur3);
+        Scene ostja = new Scene(scroller3, 1000, 500, Color.SNOW);
 
         Group juur4 = new Group();
-        Scene ost = new Scene(juur4, 280, 275, Color.SNOW);
+        ScrollPane scroller4 = new ScrollPane(juur4);
+        Scene ost = new Scene(scroller4, 285, 285, Color.SNOW);
 
         Group juur5 = new Group();
-        Scene ostuLõpp = new Scene(juur5, 320, 170, Color.SNOW);
+        ScrollPane scroller5 = new ScrollPane(juur5);
+        Scene ostuLõpp = new Scene(scroller5, 330, 185, Color.SNOW);
 
 
         //// Sisenemine //// 1
@@ -115,9 +118,6 @@ public class Peaklass_graafiline extends Application {
         Label valitudKohad = new Label();
         Button nuppKinnita = new Button("Kinnita");
 
-        //List<CheckBox> kohaKogu = new ArrayList<>();
-        //ListView<CheckBox> list = new ListView<>();
-
         nupud3.selectedToggleProperty().addListener(
                 (ObservableValue<? extends Toggle> ov, Toggle old_toggle,
                  Toggle new_toggle) -> {
@@ -135,35 +135,6 @@ public class Peaklass_graafiline extends Application {
                         Label silt35 = new Label("Vabu kohti: " + buss.vabad_kohad());
                         vb32.getChildren().addAll(silt33, silt34, silt35);
 
-                        /*
-                        vb33.getChildren().clear();
-                        kohaKogu.clear();
-                        vb33.getChildren().add(silt38);
-
-                        for (int i = 0; i < buss.getKohad().length * 2; i++) {
-                            CheckBox kohaNumber = new CheckBox(String.valueOf(i+1));
-                            kohaKogu.add(kohaNumber);
-                        }
-
-                        ObservableList<CheckBox> items = FXCollections.observableArrayList(kohaKogu);
-                        list.setItems(items);
-                        list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-
-                        list.getSelectionModel().selectedItemProperty()
-                                .addListener((ObservableValue<? extends String> ov, String old_val, String new_val) -> {
-                                    ObservableList<CheckBox> selectedItems = list.getSelectionModel().getSelectedItems();
-                                    StringBuilder sb = new StringBuilder("Valitud :");
-                                    for (CheckBox name : selectedItems) {
-                                        sb.append(name + "\n");
-                                    }
-                                    System.out.println(sb);
-                                });
-
-
-
-                        vb33.getChildren().add(list);
-                        */
                         vb33.getChildren().clear();
                         valitudKohad.setText("");
                         Label silt38 = new Label("Kohad");
@@ -186,10 +157,11 @@ public class Peaklass_graafiline extends Application {
                                         nupp.setDisable(true);
                                     });
                                 } else {
-                                    nupp.setText(Integer.toString(i * 2 + j + 1));
+                                    nupp.setText(Integer.toString(i * 4 + j + 1));
                                     nupp.setDisable(true);
                                 }
                                 hb.getChildren().add(nupp);
+
                             }
 
                             for (int j = 0; j < 2; j++) {
@@ -204,7 +176,7 @@ public class Peaklass_graafiline extends Application {
                                         nupp2.setDisable(true);
                                     });
                                 } else {
-                                    nupp2.setText(Integer.toString(i * 2 + j + 3));
+                                    nupp2.setText(Integer.toString(i * 4 + j + 3));
                                     nupp2.setDisable(true);
                                 }
                                 hb.getChildren().add(nupp2);
@@ -290,7 +262,7 @@ public class Peaklass_graafiline extends Application {
                             if (!tf41.getText().isEmpty() && !tf42.getText().isEmpty() && !tf43.getText().isEmpty()) {
                                 silt441.setText("");
 
-                                String sKohad = valitudKohad.getText().replace(":", ",")
+                                String sKohad = valitudKohad.getText().replace(":",",")
                                         .replace("[", "").replace("]", "");
                                 String[] ssKohad = sKohad.split(",");
 
@@ -312,11 +284,13 @@ public class Peaklass_graafiline extends Application {
 
                                 ostetudKohad.setText(sKohad.replace("Valitud kohad,", "Kohad:"));
                                 arve.setText("Arve: " + piletiostja.getSumma());
-                                email.setText("Teie kohad on broneeritud ja arve saadetud e-mailile: " + piletiostja.getEmail());
+                                email.setText("Teie kohad on broneeritud ja arve saadetud e-mailile: \n"  + piletiostja.getEmail());
 
                                 tf41.clear();
                                 tf42.clear();
                                 tf43.clear();
+
+
                                 peaLava.setScene(ostuLõpp);
                             } else {
                                 silt441.setText("Vigane sisend!");
@@ -324,21 +298,6 @@ public class Peaklass_graafiline extends Application {
                         });
                     }
                 });
-
-        /*nupp441.setOnMouseClicked(event -> {
-            if (!tf41.getText().isEmpty() && !tf42.getText().isEmpty() && !tf43.getText().isEmpty()){
-                silt441.setText("");
-                Piletiostja piletiostja = new Piletiostja(tf41.getText() + " " + tf42.getText() ,tf43.getText());
-
-
-                tf41.clear();
-                tf42.clear();
-                tf43.clear();
-                peaLava.setScene(ostuLõpp);
-            } else {
-                silt441.setText("Vigane sisend!");
-            }
-        });*/
 
         vb4.getChildren().addAll(silt4, hb42, nupp441, silt441);
         bp4.setCenter(vb4);
@@ -363,7 +322,13 @@ public class Peaklass_graafiline extends Application {
         HBox hb5 = new HBox();
         hb5.setPadding(new Insets(10));
         Button nupp51 = new Button("Tagasi");
-        nupp51.setOnMouseClicked(event -> peaLava.setScene(login));
+        nupp51.setOnMouseClicked(event -> {
+            nupud3.getToggles().clear();
+            vb32.getChildren().clear();
+            vb33.getChildren().clear();
+            piir2.getChildren().remove(nuppKinnita);
+            peaLava.setScene(login);
+        });
         hb5.getChildren().add(nupp51);
         bp5.setBottom(hb5);
 
@@ -451,7 +416,7 @@ public class Peaklass_graafiline extends Application {
         TextField tf21 = new TextField();
         tf21.setPromptText("5-15");
         TextField tf22 = new TextField();
-        tf22.setPromptText("hind ");
+        tf22.setPromptText("hind ?");
         TextField tf23 = new TextField();
         tf23.setPromptText("sihtkoht - lähtekoht");
         vb25.getChildren().addAll(tf21, tf22, tf23);
