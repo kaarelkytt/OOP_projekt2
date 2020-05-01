@@ -8,19 +8,19 @@ public class Piletiostja {
     private String email;
     private List<Integer> kohad = new ArrayList<>();
     private double summa;
-    private boolean vıit;
+    private boolean v√µit;
 
     public Piletiostja(String nimi, String email) {
         this.nimi = nimi;
         this.email = email;
     }
 
-    public Piletiostja(String nimi, String email, List<Integer> kohad, double summa, boolean vıit) {
+    public Piletiostja(String nimi, String email, List<Integer> kohad, double summa, boolean v√µit) {
         this.nimi = nimi;
         this.email = email;
         this.kohad = kohad;
         this.summa = summa;
-        this.vıit = vıit;
+        this.v√µit = v√µit;
     }
 
     public List<Integer> getKohad() {
@@ -39,8 +39,8 @@ public class Piletiostja {
         return summa;
     }
 
-    public boolean isVıit() {
-        return vıit;
+    public boolean isV√µit() {
+        return v√µit;
     }
 
     @Override
@@ -48,23 +48,23 @@ public class Piletiostja {
         return "Piletiostja(" +
                 "nimi: " + nimi +
                 ", email: " + email +
-                ", kohad: " + kohad +
                 ", summa: " + summa + " eurot" +
-                ", vıit: " + vıit +
+                ", v√µit: " + v√µit +
+                ", \n  kohad: " + kohad +
                 ')';
     }
 
     public void osta(List<Integer> kohad, Buss buss) {
         // Fikseerib piletiostja piletite maksumuse
-        // ja loosib, kas ta on vıitnud tasuta pileti
+        // ja loosib, kas ta on v√µitnud tasuta pileti
         this.kohad = kohad;
         int piletiteArv = kohad.size();
         if (piletiteArv > 3 && Math.random() < 0.05 * (piletiteArv - 3)) {
             this.summa = (piletiteArv - 1) * buss.getPiletiHind();
-            this.vıit = true;
+            this.v√µit = true;
         } else {
             this.summa = piletiteArv * buss.getPiletiHind();
-            this.vıit = false;
+            this.v√µit = false;
         }
     }
 }
