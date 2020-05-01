@@ -9,7 +9,7 @@ public class Andmed {
         File fail = new File(tee);
         ArrayList<Buss> bussid = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fail)))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fail), StandardCharsets.UTF_8))) {
             String rida = br.readLine();
             String[] andmed = rida.split(",");
             Buss buss = new Buss(Integer.parseInt(andmed[1]), Double.parseDouble(andmed[2]), andmed[3]);
@@ -53,7 +53,7 @@ public class Andmed {
                     }
                     kohad.deleteCharAt(kohad.lastIndexOf(";"));
 
-                    bw.write("reisija," + reisija.getNimi() + "," + reisija.getEmail() + "," + kohad.toString() + "," + reisija.getSumma() + "," + reisija.isVõit() + "\n");
+                    bw.write("reisija," + reisija.getNimi() + "," + reisija.getEmail() + "," + kohad.toString() + "," + reisija.getSumma() + "," + reisija.isVÃµit() + "\n");
                 }
             }
         }
