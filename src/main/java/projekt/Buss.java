@@ -80,7 +80,7 @@ public class Buss {
 
     /*
     public void bussiplaan() {
-        // V√§ljastab bussi kohtade plaani, kus nulliga on m√§rgistatud ostetud kohad
+        // V‰ljastab bussi kohtade plaani, kus nulliga on m‰rgistatud ostetud kohad
         // Paarituarvulised kohad on alati akna all
         System.out.println("Bussi kohtade plaan:");
         for (int i = 0; i < kohad.length / 2; i++) {
@@ -91,7 +91,7 @@ public class Buss {
 
     public boolean piisavalt_kohti(int kohtade_arv) {
         // Antud soovitud kohtade arv
-        // Tagastab t√µev√§√§rtuse, kas bussis on nii palju vabu kohti
+        // Tagastab tıev‰‰rtuse, kas bussis on nii palju vabu kohti
         return vabad_kohad() >= kohtade_arv;
     }
 

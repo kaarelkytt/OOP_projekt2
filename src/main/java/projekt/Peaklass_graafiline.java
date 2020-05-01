@@ -24,22 +24,11 @@ public class Peaklass_graafiline extends Application {
 
         //// Kood ////
 
-        /*
-        ArrayList<Buss> bussid = new ArrayList<>();
-        Buss b1 = new Buss(10, 7, "Tallinn - Tartu");
-        //b1.bussiplaan();
-        Buss b2 = new Buss(9, 7, "Tartu - Tallinn");
-        Buss b3 = new Buss(14, 5, "Tallinn - PÃ¤rnu");
-        bussid.add(b1);
-        bussid.add(b2);
-        bussid.add(b3);
-
-         */
         ArrayList<Buss> bussid = Andmed.failist("src/main/java/projekt/bussid.txt");
 
         //Andmed.salvesta("src/main/java/projekt/bussid.txt", bussid);
 
-        //// KÃµikide lehtede stseenid ////
+        //// Kõikide lehtede stseenid ////
 
         Group juur1 = new Group();
         Scene login = new Scene(juur1, 260, 100, Color.SNOW);
@@ -54,12 +43,12 @@ public class Peaklass_graafiline extends Application {
         Scene ost = new Scene(juur4, 280, 275, Color.SNOW);
 
         Group juur5 = new Group();
-        Scene ostuLÃµpp = new Scene(juur5, 320, 170, Color.SNOW);
+        Scene ostuLõpp = new Scene(juur5, 320, 170, Color.SNOW);
 
 
         //// Sisenemine //// 1
 
-        Label silt11 = new Label("Sisenen sÃ¼steemi kui:");
+        Label silt11 = new Label("Sisenen süsteemi kui:");
         silt11.setLayoutX(70);
         silt11.setLayoutY(20);
         juur1.getChildren().add(silt11);
@@ -79,9 +68,7 @@ public class Peaklass_graafiline extends Application {
         nupp12.setOnMouseClicked(event -> peaLava.setScene(ostja));
 
 
-
         //// Ostja //// 3
-
 
         BorderPane bp3 = new BorderPane();
         HBox hb3 = new HBox();
@@ -92,6 +79,7 @@ public class Peaklass_graafiline extends Application {
         hb3.getChildren().add(nupp31);
         bp3.setTop(hb3);
 
+        // vasak serv
         VBox vb31 = new VBox();
         vb31.setPadding(new Insets(10));
         vb31.setSpacing(10);
@@ -108,13 +96,13 @@ public class Peaklass_graafiline extends Application {
         }
         bp3.setLeft(vb31);
 
-
+        // keskmine osa
         VBox vb32 = new VBox();
         vb32.setPadding(new Insets(10));
         Label silt32 = new Label("Buss:");
         vb32.getChildren().add(silt32);
 
-
+        // parem serv
         BorderPane piir2 = new BorderPane();
         piir2.setPadding(new Insets(10));
         bp3.setRight(piir2);
@@ -123,13 +111,12 @@ public class Peaklass_graafiline extends Application {
         vb33.setMaxHeight(350);
         vb33.setPadding(new Insets(10));
         vb33.setSpacing(20);
-        Label silt38 = new Label("Kohad");
-        vb33.getChildren().add(silt38);
         piir2.setCenter(vb33);
+        Label valitudKohad = new Label();
         Button nuppKinnita = new Button("Kinnita");
 
-        List<CheckBox> kohaKogu = new ArrayList<>();
-        ListView<CheckBox> list = new ListView<>();
+        //List<CheckBox> kohaKogu = new ArrayList<>();
+        //ListView<CheckBox> list = new ListView<>();
 
         nupud3.selectedToggleProperty().addListener(
                 (ObservableValue<? extends Toggle> ov, Toggle old_toggle,
@@ -148,6 +135,7 @@ public class Peaklass_graafiline extends Application {
                         Label silt35 = new Label("Vabu kohti: " + buss.vabad_kohad());
                         vb32.getChildren().addAll(silt33, silt34, silt35);
 
+                        /*
                         vb33.getChildren().clear();
                         kohaKogu.clear();
                         vb33.getChildren().add(silt38);
@@ -161,7 +149,7 @@ public class Peaklass_graafiline extends Application {
                         list.setItems(items);
                         list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-                        /*
+
                         list.getSelectionModel().selectedItemProperty()
                                 .addListener((ObservableValue<? extends String> ov, String old_val, String new_val) -> {
                                     ObservableList<CheckBox> selectedItems = list.getSelectionModel().getSelectedItems();
@@ -172,10 +160,60 @@ public class Peaklass_graafiline extends Application {
                                     System.out.println(sb);
                                 });
 
-                         */
+
 
                         vb33.getChildren().add(list);
+                        */
+                        vb33.getChildren().clear();
+                        valitudKohad.setText("");
+                        Label silt38 = new Label("Kohad");
+                        vb33.getChildren().add(silt38);
 
+                        ArrayList<Integer> kohad = new ArrayList<>();
+
+
+                        for (int i = 0; i < buss.getRidade_arv(); i++) {
+                            HBox hb = new HBox();
+                            for (int j = 0; j < 2; j++) {
+                                // vasakpoolsed kohad
+                                int koht = buss.getKohad()[i * 2][j];
+                                Button nupp = new Button(Integer.toString(koht));
+                                nupp.setMinWidth(30);
+                                if (koht != 0) {
+                                    nupp.setOnMouseClicked(event -> {
+                                        kohad.add(koht);
+                                        valitudKohad.setText("Valitud kohad: " + kohad.toString());
+                                        nupp.setDisable(true);
+                                    });
+                                } else {
+                                    nupp.setText(Integer.toString(i * 2 + j + 1));
+                                    nupp.setDisable(true);
+                                }
+                                hb.getChildren().add(nupp);
+                            }
+
+                            for (int j = 0; j < 2; j++) {
+                                // parempoolsed kohad
+                                int koht2 = buss.getKohad()[i * 2 + 1][j];
+                                Button nupp2 = new Button(Integer.toString(koht2));
+                                nupp2.setMinWidth(30);
+                                if (koht2 != 0) {
+                                    nupp2.setOnMouseClicked(event -> {
+                                        kohad.add(koht2);
+                                        valitudKohad.setText("Valitud kohad: " + kohad.toString());
+                                        nupp2.setDisable(true);
+                                    });
+                                } else {
+                                    nupp2.setText(Integer.toString(i * 2 + j + 3));
+                                    nupp2.setDisable(true);
+                                }
+                                hb.getChildren().add(nupp2);
+                            }
+
+                            vb33.getChildren().add(hb);
+
+                        }
+                        vb32.getChildren().add(valitudKohad);
                         piir2.setBottom(nuppKinnita);
                     }
                 });
@@ -184,11 +222,8 @@ public class Peaklass_graafiline extends Application {
 
         juur3.getChildren().add(bp3);
 
-        peaLava.widthProperty().addListener((obs, oldVal, newVal) -> vb32.setMinWidth((double)newVal - 500));
+        peaLava.widthProperty().addListener((obs, oldVal, newVal) -> vb32.setMinWidth((double) newVal - 500));
         nuppKinnita.setOnMouseClicked(event -> peaLava.setScene(ost));
-
-
-
 
 
         //// Ost ////
@@ -249,15 +284,24 @@ public class Peaklass_graafiline extends Application {
 
                         Buss finalBuss = buss;
                         nupp441.setOnMouseClicked(event -> {
-                            if (!tf41.getText().isEmpty() && !tf42.getText().isEmpty() && !tf43.getText().isEmpty()){
+                            if (!tf41.getText().isEmpty() && !tf42.getText().isEmpty() && !tf43.getText().isEmpty()) {
                                 silt441.setText("");
-                                Piletiostja piletiostja = new Piletiostja(tf41.getText() + " " + tf42.getText() ,tf43.getText());
-                                finalBuss.lisaReisija(piletiostja);
+
+                                String sKohad = valitudKohad.getText().replace(":", ",")
+                                        .replace("[", "").replace("]", "");
+                                String[] ssKohad = sKohad.split(",");
+
+                                ArrayList<Integer> kohad = new ArrayList<>();
+                                for (int i = 1; i < ssKohad.length; i++) {
+                                    kohad.add(Integer.parseInt(ssKohad[i].trim()));
+                                }
+
+                                Müügisüsteem.müü(finalBuss, tf41.getText() + " " + tf42.getText(), tf43.getText(), kohad);
 
                                 tf41.clear();
                                 tf42.clear();
                                 tf43.clear();
-                                peaLava.setScene(ostuLÃµpp);
+                                peaLava.setScene(ostuLõpp);
                             } else {
                                 silt441.setText("Vigane sisend!");
                             }
@@ -274,7 +318,7 @@ public class Peaklass_graafiline extends Application {
                 tf41.clear();
                 tf42.clear();
                 tf43.clear();
-                peaLava.setScene(ostuLÃµpp);
+                peaLava.setScene(ostuLõpp);
             } else {
                 silt441.setText("Vigane sisend!");
             }
@@ -284,13 +328,10 @@ public class Peaklass_graafiline extends Application {
         bp4.setCenter(vb4);
 
 
-
         juur4.getChildren().add(bp4);
 
 
-
-
-        //// OstuLÃµpp ////
+        //// OstuLõpp ////
 
         BorderPane bp5 = new BorderPane();
 
@@ -298,8 +339,8 @@ public class Peaklass_graafiline extends Application {
         vb5.setPadding(new Insets(10));
         vb5.setSpacing(20);
         Label silt51 = new Label("Teie kohad on broneeritud ja arve e-mailile saadetud.");
-        Label silt52 = new Label("Kohad: " );
-        Label silt53 = new Label("Arve: " );
+        Label silt52 = new Label("Kohad: ");
+        Label silt53 = new Label("Arve: ");
         vb5.getChildren().addAll(silt51, silt52, silt53);
         bp5.setTop(vb5);
 
@@ -311,7 +352,6 @@ public class Peaklass_graafiline extends Application {
         bp5.setBottom(hb5);
 
         juur5.getChildren().add(bp5);
-
 
 
         //// Administraator //// 2
@@ -367,7 +407,7 @@ public class Peaklass_graafiline extends Application {
                         vb22.getChildren().addAll(silt23, silt24, silt25, silt26, silt27);
 
                         List<Piletiostja> ostjad = buss.getReisijad();
-                        for (Piletiostja o : ostjad){
+                        for (Piletiostja o : ostjad) {
                             Label l = new Label(o.toString());
                             vb22.getChildren().add(l);
                         }
@@ -395,16 +435,16 @@ public class Peaklass_graafiline extends Application {
         TextField tf21 = new TextField();
         tf21.setPromptText("5-15");
         TextField tf22 = new TextField();
-        tf22.setPromptText("hind â‚¬");
+        tf22.setPromptText("hind €");
         TextField tf23 = new TextField();
-        tf23.setPromptText("sihtkoht - lÃ¤htekoht");
+        tf23.setPromptText("sihtkoht - lähtekoht");
         vb25.getChildren().addAll(tf21, tf22, tf23);
         hb21.getChildren().addAll(vb24, vb25);
 
         Label silt212 = new Label();
         Button nupp22 = new Button("Lisa");
         nupp22.setOnMouseClicked(event -> {
-            if (!tf21.getText().isEmpty() && !tf22.getText().isEmpty() && !tf23.getText().isEmpty()){
+            if (!tf21.getText().isEmpty() && !tf22.getText().isEmpty() && !tf23.getText().isEmpty()) {
                 silt212.setText("");
                 Buss buss = new Buss(Integer.parseInt(tf21.getText()), Double.parseDouble(tf22.getText()), tf23.getText());
                 bussid.add(buss);
@@ -437,8 +477,7 @@ public class Peaklass_graafiline extends Application {
         bp2.setRight(vb23);
 
         juur2.getChildren().add(bp2);
-        peaLava.widthProperty().addListener((obs, oldVal, newVal) -> vb22.setMinWidth((double)newVal - 500));
-
+        peaLava.widthProperty().addListener((obs, oldVal, newVal) -> vb22.setMinWidth((double) newVal - 500));
 
 
         //// Aken ////
