@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Buss {
     private int[][] kohad;
+    private int ridade_arv;
     private double piletiHind;
     private List<Piletiostja> reisijad = new ArrayList<>();
     private String liin;
@@ -13,6 +14,7 @@ public class Buss {
         // Antud bussi ridade arv ja pileti hind
         // Loob bussi vastava ridade arvuga, ehk istme paaride hulga ja fikseerib pileti hinna
         this.piletiHind = piletiHind;
+        this.ridade_arv = ridade_arv;
         this.kohad = new int[ridade_arv * 2][2];
         for (int i = 0; i < ridade_arv * 2; i++) {
             kohad[i][0] = 2 * i + 1;
@@ -30,6 +32,10 @@ public class Buss {
 
     public String getLiin() {
         return liin;
+    }
+
+    public int getRidade_arv() {
+        return ridade_arv;
     }
 
     public void setPiletiHind(double piletiHind) {

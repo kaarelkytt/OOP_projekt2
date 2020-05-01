@@ -15,10 +15,13 @@ public class Müügisüsteem {
             buss.lisaReisija(ostja);
             List<Integer> kohad = ostja.getKohad();
 
+            /*
             if (kohtadeArv == 1)
                 System.out.print(ostja.getNimi() + ", teie koht on kinnitatud. Koha number on: ");
             else
                 System.out.print(ostja.getNimi() + ", teie kohad on kinnitatud. Kohtade numbrid on: ");
+
+             */
 
             for (int koht: kohad)
                 System.out.print(koht + " ");

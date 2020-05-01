@@ -15,6 +15,14 @@ public class Piletiostja {
         this.email = email;
     }
 
+    public Piletiostja(String nimi, String email, List<Integer> kohad, double summa, boolean võit) {
+        this.nimi = nimi;
+        this.email = email;
+        this.kohad = kohad;
+        this.summa = summa;
+        this.võit = võit;
+    }
+
     public List<Integer> getKohad() {
         return kohad;
     }
