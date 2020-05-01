@@ -310,7 +310,7 @@ public class Peaklass_graafiline extends Application {
                                     silt441.setText("VIGA! Andmeid ei salvestatud!");
                                 }
 
-                                ostetudKohad.setText(sKohad.replace("Valitud k", "K"));
+                                ostetudKohad.setText(sKohad.replace("Valitud kohad,", "Kohad:"));
                                 arve.setText("Arve: " + piletiostja.getSumma());
                                 email.setText("Teie kohad on broneeritud ja arve saadetud e-mailile: " + piletiostja.getEmail());
 
