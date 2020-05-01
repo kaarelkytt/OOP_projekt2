@@ -55,11 +55,9 @@ public class Piletiostja {
     }
 
     public void osta(int piletiteArv, Buss buss) {
-        // Fikseerib piletiostja kohad, piletite maksumuse
+        // Fikseerib piletiostja piletite maksumuse
         // ja loosib, kas ta on võitnud tasuta pileti
-        this.kohad = buss.ost(piletiteArv);
         if (piletiteArv > 3 && Math.random() < 0.05 * (piletiteArv - 3)) {
-            System.out.println("\u001B[31m Te võitsite tasuta koha! \u001B[0m");
             this.summa = (piletiteArv - 1) * buss.getPiletiHind();
             this.võit = true;
         } else {

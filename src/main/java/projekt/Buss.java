@@ -38,10 +38,6 @@ public class Buss {
         return ridade_arv;
     }
 
-    public void setPiletiHind(double piletiHind) {
-        this.piletiHind = piletiHind;
-    }
-
     public List<Piletiostja> getReisijad() {
         return reisijad;
     }
@@ -58,16 +54,6 @@ public class Buss {
         return summa;
     }
 
-    public void bussiplaan() {
-        // Väljastab bussi kohtade plaani, kus nulliga on märgistatud ostetud kohad
-        // Paarituarvulised kohad on alati akna all
-        System.out.println("Bussi kohtade plaan:");
-        for (int i = 0; i < kohad.length / 2; i++) {
-            System.out.printf("  %2d %2d   %2d %2d \n", kohad[i * 2][0], kohad[i * 2][1], kohad[i * 2 + 1][1], kohad[i * 2 + 1][0]);
-        }
-        System.out.println();
-    }
-
     public int vabad_kohad() {
         // Tagastab bussis leiduvate vabade kohtade arvu
         int vabad_kohad = 0;
@@ -78,16 +64,35 @@ public class Buss {
         return vabad_kohad;
     }
 
-    public boolean piisavalt_kohti(int kohtade_arv) {
-        // Antud soovitud kohtade arv
-        // Tagastab tõeväärtuse, kas bussis on nii palju vabu kohti
-        return vabad_kohad() >= kohtade_arv;
-    }
-
     public void koht_kinni(int koha_nr) {
         // Antud koha number
         // Muudab bussis koha numbri nulliks
         this.kohad[(koha_nr - 1) / 2][1 - (koha_nr % 2)] = 0;
+    }
+
+    public void ost(ArrayList<Integer> kohad, Piletiostja reisija) {
+        // Paneb bussis kinni vastavad kohad ja lisab reisija
+        for (int koht : kohad){
+            koht_kinni(koht);
+            lisaReisija(reisija);
+        }
+    }
+
+    /*
+    public void bussiplaan() {
+        // Väljastab bussi kohtade plaani, kus nulliga on märgistatud ostetud kohad
+        // Paarituarvulised kohad on alati akna all
+        System.out.println("Bussi kohtade plaan:");
+        for (int i = 0; i < kohad.length / 2; i++) {
+            System.out.printf("  %2d %2d   %2d %2d \n", kohad[i * 2][0], kohad[i * 2][1], kohad[i * 2 + 1][1], kohad[i * 2 + 1][0]);
+        }
+        System.out.println();
+    }
+
+    public boolean piisavalt_kohti(int kohtade_arv) {
+        // Antud soovitud kohtade arv
+        // Tagastab tõeväärtuse, kas bussis on nii palju vabu kohti
+        return vabad_kohad() >= kohtade_arv;
     }
 
     public int esimene_vaba_koht() {
@@ -135,4 +140,5 @@ public class Buss {
         }
         return kohaNumbrid;
     }
+    */
 }
