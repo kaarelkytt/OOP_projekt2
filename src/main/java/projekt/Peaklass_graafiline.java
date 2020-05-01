@@ -28,7 +28,7 @@ public class Peaklass_graafiline extends Application {
 
         //Andmed.salvesta("src/main/java/projekt/bussid.txt", bussid);
 
-        //// Kõikide lehtede stseenid ////
+        //// KÃµikide lehtede stseenid ////
 
         Group juur1 = new Group();
         Scene login = new Scene(juur1, 260, 100, Color.SNOW);
@@ -43,12 +43,12 @@ public class Peaklass_graafiline extends Application {
         Scene ost = new Scene(juur4, 280, 275, Color.SNOW);
 
         Group juur5 = new Group();
-        Scene ostuLõpp = new Scene(juur5, 320, 170, Color.SNOW);
+        Scene ostuLÃµpp = new Scene(juur5, 320, 170, Color.SNOW);
 
 
         //// Sisenemine //// 1
 
-        Label silt11 = new Label("Sisenen süsteemi kui:");
+        Label silt11 = new Label("Sisenen sÃ¼steemi kui:");
         silt11.setLayoutX(70);
         silt11.setLayoutY(20);
         juur1.getChildren().add(silt11);
@@ -290,7 +290,7 @@ public class Peaklass_graafiline extends Application {
                             if (!tf41.getText().isEmpty() && !tf42.getText().isEmpty() && !tf43.getText().isEmpty()) {
                                 silt441.setText("");
 
-                                String sKohad = valitudKohad.getText().replace(":", ",")
+                                String sKohad = valitudKohad.getText()
                                         .replace("[", "").replace("]", "");
                                 String[] ssKohad = sKohad.split(",");
 
@@ -317,7 +317,7 @@ public class Peaklass_graafiline extends Application {
                                 tf41.clear();
                                 tf42.clear();
                                 tf43.clear();
-                                peaLava.setScene(ostuLõpp);
+                                peaLava.setScene(ostuLÃµpp);
                             } else {
                                 silt441.setText("Vigane sisend!");
                             }
@@ -334,7 +334,7 @@ public class Peaklass_graafiline extends Application {
                 tf41.clear();
                 tf42.clear();
                 tf43.clear();
-                peaLava.setScene(ostuLõpp);
+                peaLava.setScene(ostuLÃµpp);
             } else {
                 silt441.setText("Vigane sisend!");
             }
@@ -347,7 +347,7 @@ public class Peaklass_graafiline extends Application {
         juur4.getChildren().add(bp4);
 
 
-        //// OstuLõpp ////
+        //// OstuLÃµpp ////
 
         BorderPane bp5 = new BorderPane();
 
@@ -451,9 +451,9 @@ public class Peaklass_graafiline extends Application {
         TextField tf21 = new TextField();
         tf21.setPromptText("5-15");
         TextField tf22 = new TextField();
-        tf22.setPromptText("hind €");
+        tf22.setPromptText("hind Â€");
         TextField tf23 = new TextField();
-        tf23.setPromptText("sihtkoht - lähtekoht");
+        tf23.setPromptText("sihtkoht - lÃ¤htekoht");
         vb25.getChildren().addAll(tf21, tf22, tf23);
         hb21.getChildren().addAll(vb24, vb25);
 
