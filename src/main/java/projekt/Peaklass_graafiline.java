@@ -290,7 +290,7 @@ public class Peaklass_graafiline extends Application {
                             if (!tf41.getText().isEmpty() && !tf42.getText().isEmpty() && !tf43.getText().isEmpty()) {
                                 silt441.setText("");
 
-                                String sKohad = valitudKohad.getText()
+                                String sKohad = valitudKohad.getText().replace(":", ",")
                                         .replace("[", "").replace("]", "");
                                 String[] ssKohad = sKohad.split(",");
 
